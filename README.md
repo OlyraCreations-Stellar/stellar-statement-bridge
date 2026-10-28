@@ -19,7 +19,7 @@ Public documentation confirms that SDP exposes paginated payment records and ERP
 - [`docs/PRD.md`](docs/PRD.md): proposed requirements and validation gate.
 - [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md): proposed data flow and security boundaries.
 - [`docs/CUSTOMER_DISCOVERY.md`](docs/CUSTOMER_DISCOVERY.md): interview and pilot protocol; no interviews have occurred.
-- [`docs/ISSUE_BACKLOG_DRAFT.md`](docs/ISSUE_BACKLOG_DRAFT.md): 20 draft issues, not yet published to GitHub.
+- [`docs/ISSUE_BACKLOG_DRAFT.md`](docs/ISSUE_BACKLOG_DRAFT.md): scope and acceptance criteria for 20 published GitHub issues.
 - [`docs/PLAN.md`](docs/PLAN.md): milestone and session state.
 - [Contributor roadmap issues](https://github.com/OlyraCreations-Stellar/stellar-statement-bridge/issues): 20 issues are published. Issues 1–3 cover discovery; issue 4 (scaffold) and issue 9 (normalization) cover the authorized prototype slice; remaining integration work is blocked pending customer and compatibility validation.
 
@@ -28,7 +28,7 @@ Public documentation confirms that SDP exposes paginated payment records and ERP
 - Verified in official documentation: SDP's payment API includes payment status, identifiers, Stellar transaction ID, amount, and asset identity; ERPNext uses Bank Transactions as statement evidence and has a native reconciliation workflow.
 - Not verified: user demand, ERPNext adoption among SDP operators, current native connector availability, supported app versions, sandbox behavior, Wave acceptance, or production readiness.
 - The SDP normalizer's eight synthetic unit tests pass under Python 3.14.4 in WSL.
-- Full Frappe/ERPNext install and build have not been verified. WSL lacks Bench and currently has Node 22; the documented Frappe v16 prerequisites call for Node 24.
+- Full Frappe/ERPNext install and build have not been verified. WSL now has the documented Node 24, MariaDB 11.8, and Redis prerequisites plus Bench. Frappe v16.54.0 is cloned, but its Python dependency sync was interrupted because WSL downloads are very slow; no app build or ERPNext install has been run.
 
 ## License
 
