@@ -1,6 +1,6 @@
 # Stellar Statement Bridge
 
-**Project status: discovery and architecture. No application code, pilot, or deployment exists yet.** This is a working product name. The public repository is hosted by the `OlyraCreations-Stellar` GitHub organization.
+**Project status: early prototype.** The repository contains a Frappe app scaffold and a pure SDP payment normalizer. No network integration, ERPNext writes, pilot, or deployment exists. This is a working product name. The public repository is hosted by the `OlyraCreations-Stellar` GitHub organization.
 
 Stellar Statement Bridge is a proposed Frappe app that would import completed Stellar Disbursement Platform (SDP) payment evidence into ERPNext Bank Transactions. Finance users could then use ERPNext's native reconciliation workflow to match statement records to existing accounting vouchers.
 
@@ -27,7 +27,8 @@ Public documentation confirms that SDP exposes paginated payment records and ERP
 
 - Verified in official documentation: SDP's payment API includes payment status, identifiers, Stellar transaction ID, amount, and asset identity; ERPNext uses Bank Transactions as statement evidence and has a native reconciliation workflow.
 - Not verified: user demand, ERPNext adoption among SDP operators, current native connector availability, supported app versions, sandbox behavior, Wave acceptance, or production readiness.
-- No tests or builds apply because the app has not been scaffolded.
+- The SDP normalizer's eight synthetic unit tests pass under Python 3.14.4 in WSL.
+- Full Frappe/ERPNext install and build have not been verified. WSL lacks Bench and currently has Node 22; the documented Frappe v16 prerequisites call for Node 24.
 
 ## License
 
@@ -40,4 +41,14 @@ This repository is licensed under the Apache License 2.0. The license does not i
 3. After an operator confirms, create deduplicated ERPNext Bank Transactions only for successful Stellar payments with a valid asset/account mapping.
 4. Leave voucher creation and reconciliation to ERPNext's own controls.
 
-See [PRD](docs/PRD.md) and [Architecture](docs/ARCHITECTURE.md) for the full proposed criteria. Do not use this planning repository to connect production accounts or financial data.
+See [PRD](docs/PRD.md) and [Architecture](docs/ARCHITECTURE.md) for the full proposed criteria. Do not use this prototype to connect production accounts or financial data.
+
+## Local pure-Python checks
+
+With Python 3.14 available, run the isolated normalizer tests from the repository root:
+
+```sh
+python -m unittest discover -s stellar_statement_bridge/stellar_statement_bridge/tests -v
+```
+
+The first slice makes no network calls and does not import Frappe at test time.

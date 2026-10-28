@@ -4,7 +4,7 @@
 **Status:** Published as 20 GitHub issues in `OlyraCreations-Stellar/stellar-statement-bridge`. Supported ERPNext versions and a pilot are not yet established.
 **Wave status:** These issues are not submitted to Drips Wave. Repository acceptance and issue selection are separate review steps.
 
-Issues 1–3 validate integration assumptions before contributors build against them. Issues 4–20 are labeled `status: blocked` until a maintainer records a go decision based on customer discovery. Labels are project workflow labels, not a claim about mandatory Drips labels.
+Issues 1–3 validate integration assumptions. Issues 4 (app scaffold) and 9 (normalization) are in progress for the explicitly authorized, isolated prototype slice. Issues 5–8 and 10–20 remain `status: blocked` pending customer discovery and a verified Frappe/ERPNext sandbox. Labels are project workflow labels, not a claim about mandatory Drips labels.
 
 ## 1. `docs(discovery): document the supported SDP payment fields`
 

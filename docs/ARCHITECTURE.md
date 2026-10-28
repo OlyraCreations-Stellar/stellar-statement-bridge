@@ -1,6 +1,6 @@
 # Architecture: SDP–ERPNext Bank Reconciliation Connector
 
-**Status:** Proposed for the approved MVP scope; compatibility and real operator workflow still require validation. No application code exists yet.
+**Status:** Prototype scope; compatibility and real operator workflow still require validation. The initial scaffold and pure normalizer exist; no network or ERP write integration exists.
 **Topology:** One installable Frappe/ERPNext app. No Soroban contract, standalone backend, indexer, or hosted database.
 
 ## Context and data flow
@@ -107,9 +107,16 @@ Exact Bank Transaction field names, date choice (payment-created vs ledger times
 ## Deployment and versioning
 
 - Install as a custom Frappe app into a customer's existing ERPNext deployment; no external hosted service is required.
-- Support matrix (ERPNext/Frappe versions) must be selected after checking maintained releases and validating DocType behavior in CI/sandbox.
+- Initial target is the current v16 line: Frappe v16.54.0 and ERPNext v16.52.1 were the latest observed releases/tags on 2026-10-28. Do not claim a supported matrix until the app installs and runs against a verified paired bench.
+- Frappe's v16 installation guide requires Python 3.14 and Node 24. The available WSL environment has Python 3.14.4 and Node 22.22.1; Bench is absent, so full app installation/build verification remains blocked.
 - SDP deployments may differ; test against an official local SDP sandbox/fixture and a real authorized sandbox tenant before production claims.
 - No production URLs, keys, tenant IDs, deployment IDs, or contract addresses are included in source control.
+
+Current compatibility sources:
+
+- [Frappe releases](https://github.com/frappe/frappe/releases)
+- [ERPNext v16 tags](https://github.com/frappe/erpnext/tags)
+- [Frappe installation requirements](https://docs.frappe.io/framework/user/en/installation)
 
 ## Testing strategy
 
@@ -123,6 +130,6 @@ Exact Bank Transaction field names, date choice (payment-created vs ledger times
 
 1. Confirm with operators whether ERPNext is used by the target SDP teams; otherwise select the ERP from evidence and re-scope.
 2. Validate that importing Bank Transactions is more useful than the native CSV flow and that manual ERP reconciliation remains costly.
-3. Pin supported ERPNext/Frappe releases and exact import fields.
+3. Install a clean Frappe/ERPNext v16 bench and verify exact Bank Transaction fields and app compatibility.
 4. Decide date/reference field semantics from current SDP response behavior and the pilot's accounting policy.
-5. Confirm organization login/name and project name before creating a public organization/repository.
+5. Confirm the final product name; `Stellar Statement Bridge` remains a working label.

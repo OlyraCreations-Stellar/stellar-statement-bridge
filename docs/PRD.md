@@ -89,7 +89,7 @@ Import completed Stellar payout evidence from SDP into ERPNext Bank Transactions
 - Keep recipient PII and secrets out of logs, issue examples, and public docs. Store only the minimum payment evidence needed for ERP traceability.
 - All network calls use TLS, bounded timeouts, pagination limits, and retry rules that do not duplicate writes.
 - ERPNext writes are scoped to Bank Transaction and the app's own sync records.
-- Support versions will be pinned only after checking current Frappe/ERPNext release compatibility before implementation.
+- The prototype targets the current Frappe/ERPNext v16 line. Exact minimum patch releases and supported pairings remain pending an install smoke test in a clean bench. The initial pure normalizer tests run on Python 3.14 without Frappe.
 - The product is an integration aid, not an accounting, compliance, custody, or payment execution service.
 
 ## Dependencies and risks
