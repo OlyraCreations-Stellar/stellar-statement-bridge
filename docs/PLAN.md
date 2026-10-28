@@ -25,10 +25,10 @@ Validate and build a narrowly scoped SDP-to-ERPNext reconciliation prototype wit
 - [x] M4: Scaffold the single Frappe app and implement isolated, tested SDP payment normalization.
 - [ ] M5: Verify app install/build in a clean v16 bench; this is blocked on Node 24 and Bench in WSL.
 - [ ] M6: Continue operator discovery; keep network integration and ERPNext writes gated on evidence and sandbox checks.
-- [x] M7: Commit and push the tested scaffold/normalizer slice on `feat/initial-app-scaffold`; final documentation commit is pending.
+- [x] M7: Commit and push the tested scaffold/normalizer slice and documentation on `feat/initial-app-scaffold`.
 
 ## Next actionable task
-- Task: Commit and push the documentation and roadmap updates, then continue customer discovery and establish a working v16 bench for install verification.
+- Task: Complete customer discovery and establish a working v16 bench for install verification before adding network or ERPNext write paths.
 - Dependencies: Python 3.14.4 is available in WSL. Frappe v16 integration checks need Node 24 and Bench, which are not currently installed. No operator interviews or pilot evidence exists.
 - Completed files: Frappe package scaffold, pure `sdp/normalization.py`, synthetic unit tests, README check instructions, and updated project docs.
 - Verification command/result: `python3.14 -m unittest discover -s stellar_statement_bridge/stellar_statement_bridge/tests -v` under WSL; 8 tests passed. This does not verify Frappe installation or ERPNext integration.

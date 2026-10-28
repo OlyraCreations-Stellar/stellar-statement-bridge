@@ -21,7 +21,7 @@ Public documentation confirms that SDP exposes paginated payment records and ERP
 - [`docs/CUSTOMER_DISCOVERY.md`](docs/CUSTOMER_DISCOVERY.md): interview and pilot protocol; no interviews have occurred.
 - [`docs/ISSUE_BACKLOG_DRAFT.md`](docs/ISSUE_BACKLOG_DRAFT.md): 20 draft issues, not yet published to GitHub.
 - [`docs/PLAN.md`](docs/PLAN.md): milestone and session state.
-- [Contributor roadmap issues](https://github.com/OlyraCreations-Stellar/stellar-statement-bridge/issues): 20 issues are published. Start with discovery issues 1–3; implementation issues remain blocked until the user and compatibility assumptions pass the documented go/no-go gate.
+- [Contributor roadmap issues](https://github.com/OlyraCreations-Stellar/stellar-statement-bridge/issues): 20 issues are published. Issues 1–3 cover discovery; issue 4 (scaffold) and issue 9 (normalization) cover the authorized prototype slice; remaining integration work is blocked pending customer and compatibility validation.
 
 ## Current verification
 
