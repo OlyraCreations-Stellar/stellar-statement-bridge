@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Frappe / ERPNext local development
+sites/
+apps.json
+*.log
+
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+
+# Editor and operating system files
+.idea/
+.vscode/
+Thumbs.db
+.DS_Store

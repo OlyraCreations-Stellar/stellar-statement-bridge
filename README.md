@@ -1,0 +1,38 @@
+# Stellar Statement Bridge
+
+**Project status: discovery and architecture. No application code, pilot, or deployment exists yet.** This is a working product name. The GitHub organization `OlyraCreations-Stellar` has been created; the repository and issue backlog are being prepared.
+
+Stellar Statement Bridge is a proposed Frappe app that would import completed Stellar Disbursement Platform (SDP) payment evidence into ERPNext Bank Transactions. Finance users could then use ERPNext's native reconciliation workflow to match statement records to existing accounting vouchers.
+
+The app is deliberately scoped to statement evidence. It is not a payout sender, wallet, accounting engine, or payment processor. It would not create or submit Payment Entries or Journal Entries, hold keys, or send funds.
+
+## Why this is only a proposal
+
+Public documentation confirms that SDP exposes paginated payment records and ERPNext supports Bank Transactions and bank reconciliation. It does not establish that SDP operators use ERPNext or that their current CSV workflow is painful. Customer discovery is still required. See [the evaluation](docs/IDEA_EVALUATION.md), [competitive analysis](docs/COMPETITIVE_ANALYSIS.md), and [customer discovery plan](docs/CUSTOMER_DISCOVERY.md).
+
+## Repository map
+
+- [`docs/ECOSYSTEM_RESEARCH.md`](docs/ECOSYSTEM_RESEARCH.md): Drips/Stellar research and source links.
+- [`docs/COMPETITIVE_ANALYSIS.md`](docs/COMPETITIVE_ANALYSIS.md): overlap classifications and alternatives.
+- [`docs/OPPORTUNITY_DISCOVERY.md`](docs/OPPORTUNITY_DISCOVERY.md): candidate directions.
+- [`docs/IDEA_EVALUATION.md`](docs/IDEA_EVALUATION.md): skeptical review and conditional recommendation.
+- [`docs/PRD.md`](docs/PRD.md): proposed requirements and validation gate.
+- [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md): proposed data flow and security boundaries.
+- [`docs/CUSTOMER_DISCOVERY.md`](docs/CUSTOMER_DISCOVERY.md): interview and pilot protocol; no interviews have occurred.
+- [`docs/ISSUE_BACKLOG_DRAFT.md`](docs/ISSUE_BACKLOG_DRAFT.md): 20 draft issues, not yet published to GitHub.
+- [`docs/PLAN.md`](docs/PLAN.md): milestone and session state.
+
+## Current verification
+
+- Verified in official documentation: SDP's payment API includes payment status, identifiers, Stellar transaction ID, amount, and asset identity; ERPNext uses Bank Transactions as statement evidence and has a native reconciliation workflow.
+- Not verified: user demand, ERPNext adoption among SDP operators, current native connector availability, supported app versions, sandbox behavior, Wave acceptance, or production readiness.
+- No tests or builds apply because the app has not been scaffolded.
+
+## Intended first product boundary
+
+1. Read SDP payment records using a least-privilege read-only API key.
+2. Preview eligible and blocked rows with reasons.
+3. After an operator confirms, create deduplicated ERPNext Bank Transactions only for successful Stellar payments with a valid asset/account mapping.
+4. Leave voucher creation and reconciliation to ERPNext's own controls.
+
+See [PRD](docs/PRD.md) and [Architecture](docs/ARCHITECTURE.md) for the full proposed criteria. Do not use this planning repository to connect production accounts or financial data.
