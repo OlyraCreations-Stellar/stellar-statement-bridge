@@ -1,0 +1,3 @@
+include LICENSE
+include README.md
+recursive-include stellar_statement_bridge *.py
