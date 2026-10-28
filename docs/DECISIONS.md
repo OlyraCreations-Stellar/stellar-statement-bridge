@@ -36,11 +36,21 @@
 - **Decision:** Plan one repository for the Frappe app and documentation. ERPNext version support and exact structure remain to be selected after compatibility research.
 - **Consequences:** Simpler contributor setup; a future second ERP integration should be evidence-led and may remain a separate package only if maintenance or release needs justify it.
 
-## ADR-005: Organization/repository naming remains provisional
+## ADR-005: Use the OlyraCreations-Stellar organization and one public app repository
 
-- **Status:** Blocked on organization creation in GitHub web UI; no external organization or repository exists.
+- **Status:** Adopted; the organization and public repository are created.
 - **Date:** 2026-10-28.
-- **Context:** The authenticated `OlyraCreations` identity is a personal account with no current organization memberships. The name `OlyraLabs` belongs to an unrelated public organization. GitHub CLI in this environment lists organizations and creates repositories but has no organization-create command; the documented REST organization endpoints also do not expose creation.
-- **Options:** Publish under the personal account; create a new organization through GitHub's web interface; choose another existing organization (not authorized).
-- **Decision:** Prepare local files under the provisional folder `OlyraCreations-Stellar/stellar-statement-bridge`; do not publish or use an unrelated organization. The provisional organization handle is not confirmed or created.
-- **Consequences:** The local draft is ready for transfer/rename once the user creates or selects the organization. The public repo and 20 issues cannot be created under the requested new organization until that web-only step is complete.
+- **Context:** The authenticated `OlyraCreations` identity is a personal account. GitHub CLI cannot create organizations; the account owner completed the web setup for the approved handle.
+- **Options:** Publish under the personal account; create an organization through GitHub's web interface; split the app into multiple repositories.
+- **Decision:** Create `OlyraCreations-Stellar/stellar-statement-bridge` as the single public repository. No contract or independently deployed backend justifies a second repository.
+- **Consequences:** The organization and repository now exist. The product name remains provisional, customer demand is unvalidated, and Wave approval has not been granted.
+
+## ADR-006: License the repository under Apache-2.0
+
+- **Status:** Adopted.
+- **Date:** 2026-10-28.
+- **Context:** The public repository needs clear terms before accepting contributor work. ERPNext is GPLv3; Apache-2.0 is compatible with GPLv3 and includes an express patent license. This is a project choice, not a Drips Wave requirement.
+- **Options:** MIT; Apache-2.0; GPLv3; defer licensing and keep the repository non-contributable.
+- **Decision:** License project code and authored documentation under Apache-2.0. Keep third-party assets under their own licenses and do not copy ERPNext code into this repository.
+- **Consequences:** Contributors retain copyright while licensing contributions under Apache-2.0. Review third-party dependency and attribution requirements before distribution.
+- **Sources:** [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0.html), [Apache compatibility FAQ](https://www.apache.org/foundation/license-faq.html), and [Frappe license and trademark policy](https://docs.frappe.io/legal/others/license-and-trademark).

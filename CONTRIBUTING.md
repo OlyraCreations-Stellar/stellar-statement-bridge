@@ -1,6 +1,6 @@
 # Contributing
 
-This repository is in discovery and has no runnable app yet. Check the issue tracker and the draft plan before starting work. The draft list in `docs/ISSUE_BACKLOG_DRAFT.md` is not a public task assignment; issues will be created after the repository owner and project scope are established.
+This repository is in discovery and has no runnable app yet. Check the issue tracker and the plan before starting work. Begin with discovery issues 1–3. Do not start implementation issues until maintainers record a go decision based on the customer-discovery gate in `docs/CUSTOMER_DISCOVERY.md`. Those later issues are labeled `status: blocked` until that decision.
 
 ## Before opening an issue or pull request
 
@@ -18,3 +18,5 @@ This repository is in discovery and has no runnable app yet. Check the issue tra
 - Never add a write-capable SDP call, a key custody path, or automatic accounting voucher submission without a separately reviewed product and security decision.
 
 The supported Python, Frappe, and ERPNext versions will be documented after compatibility research. Until then, do not assume a version matrix.
+
+Contributions are accepted under the Apache License 2.0. See [`LICENSE`](LICENSE).

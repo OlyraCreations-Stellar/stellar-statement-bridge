@@ -1,10 +1,10 @@
-# Draft contributor issue backlog (20 issues)
+# Contributor issue backlog (20 issues)
 
 **Repository:** Proposed single Frappe/ERPNext app.
-**Status:** Draft only; not published. The organization exists; the repository, supported ERPNext versions, and pilot are not yet established.
+**Status:** Published as 20 GitHub issues in `OlyraCreations-Stellar/stellar-statement-bridge`. Supported ERPNext versions and a pilot are not yet established.
 **Wave status:** These issues are not submitted to Drips Wave. Repository acceptance and issue selection are separate review steps.
 
-The first issues deliberately validate integration assumptions before contributors build against them. Later issues depend on those findings. Labels are suggestions, not a claim about mandatory Drips labels.
+Issues 1–3 validate integration assumptions before contributors build against them. Issues 4–20 are labeled `status: blocked` until a maintainer records a go decision based on customer discovery. Labels are project workflow labels, not a claim about mandatory Drips labels.
 
 ## 1. `docs(discovery): document the supported SDP payment fields`
 

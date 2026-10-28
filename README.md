@@ -1,6 +1,6 @@
 # Stellar Statement Bridge
 
-**Project status: discovery and architecture. No application code, pilot, or deployment exists yet.** This is a working product name. The GitHub organization `OlyraCreations-Stellar` has been created; the repository and issue backlog are being prepared.
+**Project status: discovery and architecture. No application code, pilot, or deployment exists yet.** This is a working product name. The public repository is hosted by the `OlyraCreations-Stellar` GitHub organization.
 
 Stellar Statement Bridge is a proposed Frappe app that would import completed Stellar Disbursement Platform (SDP) payment evidence into ERPNext Bank Transactions. Finance users could then use ERPNext's native reconciliation workflow to match statement records to existing accounting vouchers.
 
@@ -21,12 +21,17 @@ Public documentation confirms that SDP exposes paginated payment records and ERP
 - [`docs/CUSTOMER_DISCOVERY.md`](docs/CUSTOMER_DISCOVERY.md): interview and pilot protocol; no interviews have occurred.
 - [`docs/ISSUE_BACKLOG_DRAFT.md`](docs/ISSUE_BACKLOG_DRAFT.md): 20 draft issues, not yet published to GitHub.
 - [`docs/PLAN.md`](docs/PLAN.md): milestone and session state.
+- [Contributor roadmap issues](https://github.com/OlyraCreations-Stellar/stellar-statement-bridge/issues): 20 issues are published. Start with discovery issues 1–3; implementation issues remain blocked until the user and compatibility assumptions pass the documented go/no-go gate.
 
 ## Current verification
 
 - Verified in official documentation: SDP's payment API includes payment status, identifiers, Stellar transaction ID, amount, and asset identity; ERPNext uses Bank Transactions as statement evidence and has a native reconciliation workflow.
 - Not verified: user demand, ERPNext adoption among SDP operators, current native connector availability, supported app versions, sandbox behavior, Wave acceptance, or production readiness.
 - No tests or builds apply because the app has not been scaffolded.
+
+## License
+
+This repository is licensed under the Apache License 2.0. The license does not imply Drips Wave approval.
 
 ## Intended first product boundary
 
