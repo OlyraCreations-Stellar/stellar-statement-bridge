@@ -1,8 +1,8 @@
 # Contributor issue backlog (20 issues)
 
 **Repository:** Proposed single Frappe/ERPNext app.
-**Status:** Published as 20 GitHub issues in `OlyraCreations-Stellar/stellar-statement-bridge`. Supported ERPNext versions and a pilot are not yet established.
-**Wave status:** These issues are not submitted to Drips Wave. Repository acceptance and issue selection are separate review steps.
+**Status:** Published as 20 GitHub issues in `OlyraCreations-Stellar/stellar-statement-bridge`. Supported ERPNext versions and a pilot are not yet established. Issues #2 and #3 were refined on 2026-10-30 using Drips meaningful-issue guidance and ERPNext source evidence.
+**Wave status:** These issues are not submitted to Drips Wave. No Drips Program label has been applied. Repository acceptance and issue selection are separate review steps.
 
 Issues 1–3 validate integration assumptions. Issues 4 (app scaffold) and 9 (normalization) are in progress for the explicitly authorized, isolated prototype slice. Issues 5–8 and 10–20 remain `status: blocked` pending customer discovery and a verified Frappe/ERPNext sandbox. Labels are project workflow labels, not a claim about mandatory Drips labels.
 
@@ -18,24 +18,32 @@ Issues 1–3 validate integration assumptions. Issues 4 (app scaffold) and 9 (no
 
 ## 2. `docs(discovery): verify ERPNext bank transaction import behavior`
 
-**Type/complexity:** research / trivial
-**Summary:** Verify supported ERPNext/Frappe releases, Bank Transaction fields, import paths, and permissions in a disposable sandbox.
+**Type/complexity:** research / medium (internal estimate; not a Drips point assignment)
+**Why it matters:** A connector that writes ERPNext Bank Transactions must match the installed version's required fields, precision rules, permissions, and document lifecycle. Bench asset builds do not prove that the app installs on a site or that its intended write is compatible.
+**Scope and direction:** Use a disposable site with synthetic or sanitized data. Inspect the matching ERPNext release/source for the Bank Transaction DocType and native statement importer. Relevant project context: `docs/ARCHITECTURE.md`, `docs/PRD.md`, and `stellar_statement_bridge/`. Do not use live financial records or create accounting vouchers.
 **Acceptance Criteria:**
-- [ ] Supported versions are named with evidence from maintained release/docs and an install smoke check.
-- [ ] Required Bank Transaction fields and currency/date constraints are recorded.
-- [ ] No live financial records are used.
-**Tech Stack:** ERPNext, Frappe Framework, Markdown.
-
+- [ ] Record exact Frappe/ERPNext versions and source/release references; distinguish asset builds from site installation.
+- [ ] Install the app on a disposable site, or document a reproducible blocker with exact command and failure evidence.
+- [ ] Document required Bank Transaction fields, date/amount precision, insert/submit lifecycle, relevant permissions, and native import route with source references.
+- [ ] Run a synthetic Bank Transaction smoke check for the statement-side lifecycle; do not create or change Payment Entries or Journal Entries.
+- [ ] Keep credentials, live payment data, and recipient personal data out of fixtures, logs, and docs.
+- [ ] Include findings, commands/results, and any support-policy change in the PR.
+**Dependencies:** Issue #1; disposable ERPNext site and compatible Frappe/ERPNext checkout.
+**Tech Stack:** ERPNext, Frappe Framework, Python, Markdown.
 ## 3. `docs(discovery): compare native CSV import with SDP connector workflow`
 
-**Type/complexity:** research / trivial
-**Summary:** Measure the steps and errors for native CSV conversion/import versus the proposed connector using the same sanitized sample.
+**Type/complexity:** research / medium (internal estimate; not a Drips point assignment)
+**Why it matters:** ERPNext's native Bank Statement Import supports mapped statement inputs, including CSV/MT940 paths, and creates/submits Bank Transactions. A custom connector is justified only if a repeatable gap remains for completed SDP payouts, such as preserving source identifiers, exact asset/account mapping, or safe duplicate handling.
+**Scope and direction:** Use the same synthetic/sanitized SDP-shaped dataset in ERPNext's native statement import and proposed connector workflows in the disposable site from issue #2. Relevant context: `docs/ARCHITECTURE.md`, `docs/PRD.md`, and matching ERPNext import/Bank Transaction source. Do not invent timings, performance wins, or user demand.
 **Acceptance Criteria:**
-- [ ] Same test dataset and explicit comparison steps are documented.
-- [ ] Time, manual edits, duplicate handling, and rejected rows are reported without fabricated performance claims.
-- [ ] A stop recommendation is recorded if native import is already sufficient.
-**Tech Stack:** SDP CSV/API export, ERPNext sandbox, Markdown.
-
+- [ ] Document the fixture, exact ERPNext version, setup, and repeatable comparison steps.
+- [ ] Compare required fields/transformations, retained SDP/Stellar identifiers, duplicate behavior, rejected-row visibility, permissions, and manual edits for both paths.
+- [ ] If elapsed time is measured, record the method and report only this fixture's observed result; omit timing if not measured reproducibly.
+- [ ] Separate verified behavior from assumptions and link relevant ERPNext source/docs.
+- [ ] Give a clear GO / STOP / RE-SCOPE recommendation identifying the remaining gap. If native import is sufficient, recommend stopping the connector MVP or contributing upstream.
+- [ ] Include the fixture (without real transaction/person data), comparison notes, and recommendation in the PR.
+**Dependencies:** Issues #1 and #2. No live SDP credentials or production data are needed.
+**Tech Stack:** Synthetic SDP-shaped CSV, ERPNext sandbox, Markdown.
 ## 4. `feat(app): scaffold installable Frappe application`
 
 **Type/complexity:** feature / medium
