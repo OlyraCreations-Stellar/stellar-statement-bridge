@@ -107,8 +107,9 @@ Exact Bank Transaction field names, date choice (payment-created vs ledger times
 ## Deployment and versioning
 
 - Install as a custom Frappe app into a customer's existing ERPNext deployment; no external hosted service is required.
-- Initial target is the current v16 line: Frappe v16.54.0 and ERPNext v16.52.1 were the latest observed releases/tags on 2026-10-28. Do not claim a supported matrix until the app installs and runs against a verified paired bench.
-- Frappe's v16 installation guide requires Python 3.14 and Node 24. The available WSL environment has Python 3.14.4 and Node 22.22.1; Bench is absent, so full app installation/build verification remains blocked.
+- Initial target is the current v16 line. The local bench uses Frappe v16.54.0 and ERPNext v16.53.0 from the `version-16` branch as of 2026-10-30. Do not claim a supported matrix until the app installs and runs on a verified ERPNext site.
+- Frappe's v16 installation guide requires Python 3.14 and Node 24. The WSL bench now has Python 3.14.4, Node 24.22.2, Yarn 1.22.22, Bench 5.31.1, Frappe v16.54.0, ERPNext v16.53.0, and the product app at commit `8216126`. Frappe, ERPNext, and product-app asset builds pass. No site exists, so site-level installation and Bank Transaction compatibility remain unverified.
+- ERPNext v16.53.0 source at commit `9cd11b19575bfc34f092a24f6c8b368c4dd69481` contains a Bank Statement Import workflow for mapped CSV/MT940 statements and a Bank Transaction import path that inserts and submits mapped rows. The exact fit with SDP exports, and whether SDP-specific deduplication and account mapping justify a separate app, require operator validation.
 - SDP deployments may differ; test against an official local SDP sandbox/fixture and a real authorized sandbox tenant before production claims.
 - No production URLs, keys, tenant IDs, deployment IDs, or contract addresses are included in source control.
 

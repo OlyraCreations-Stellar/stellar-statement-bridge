@@ -28,7 +28,7 @@ Public documentation confirms that SDP exposes paginated payment records and ERP
 - Verified in official documentation: SDP's payment API includes payment status, identifiers, Stellar transaction ID, amount, and asset identity; ERPNext uses Bank Transactions as statement evidence and has a native reconciliation workflow.
 - Not verified: user demand, ERPNext adoption among SDP operators, current native connector availability, supported app versions, sandbox behavior, Wave acceptance, or production readiness.
 - Eight synthetic normalizer tests pass under Python 3.14.4 in WSL; package metadata and Python compilation checks also pass.
-- Full Frappe/ERPNext install and build have not been verified. WSL has the documented Node 24, MariaDB 11.8, and Redis prerequisites plus Bench. Frappe v16.54.0 and its Python dependencies are installed in the bench environment. Bench initialization remains incomplete because the existing partial bench prompts before overwriting its Frappe checkout and `Procfile`. A Frappe asset build was started, but WSL returned `CreateVm/ERROR_TIMEOUT` before a result was available. The app build and ERPNext site install remain unverified.
+- The product app is installed in a local Frappe 16.54.0 / ERPNext 16.53.0 bench. Frappe, ERPNext (including Banking assets), and `stellar_statement_bridge` asset builds pass. No site exists, so the product app has not been installed on a site and end-to-end behavior remains unverified. ERPNext's native Bank Statement Import supports bank-mapped CSV and MT940 paths; the specific suitability of SDP exports remains unverified. Asset builds emitted Redis cache warnings because the separate bench `redis_cache` process was not running; the builds still exited successfully.
 
 ## License
 

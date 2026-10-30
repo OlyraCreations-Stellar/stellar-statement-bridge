@@ -2,7 +2,7 @@
 
 **Status:** Approved direction; MVP and integration remain hypotheses pending operator validation.
 **Working name:** Stellar Statement Bridge (not a final product or organization name).
-**Research date:** 2026-10-28.
+**Research date:** 2026-10-30.
 
 ## Problem
 
@@ -18,7 +18,7 @@ Teams that use Stellar's Disbursement Platform (SDP) and ERPNext may need to tra
 ## Alternatives
 
 - SDP's paginated payment API, individual payment export, and CSV exports.
-- ERPNext's Bank Statement Import, Data Import/API, and manual Bank Transaction entry.
+- ERPNext's native Bank Statement Import (including bank-mapped CSV and MT940 paths), Data Import/API, and manual Bank Transaction entry. Whether SDP exports fit those mappings without a manual transformation remains unverified.
 - A manually maintained converter or an organization-specific integration.
 - Existing bank/payment reconciliation products where they already support the actual rails.
 
