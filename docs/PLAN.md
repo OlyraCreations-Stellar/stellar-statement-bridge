@@ -17,6 +17,8 @@ Validate and build a narrowly scoped SDP-to-ERPNext reconciliation prototype wit
 - Issue backlog verification (2026-10-30): 20 original issues remain open. Issues 2 and 3 were rewritten to meet meaningful-issue guidance and re-estimated as internal `complexity: medium`; issues 4 and 9 remain `status: in progress`. No Drips Program label was applied.
 - Current framework evidence: Official Frappe guidance lists Python 3.14, Node 24, MariaDB 11.8, Redis/Valkey 6+, and Yarn 1.22+ for v16. The WSL runtime meets these versions. The first build invocation hit a WSL VM startup timeout; later WSL commands worked. Missing Frappe Node dependencies were installed from its lockfile, after which Frappe, the product app, and ERPNext asset builds succeeded.
 - Available tools checked: GitHub CLI, Git, Node/npm, Python. `cargo` and `rustc` were not found in the checked command paths.
+- Brand identity (2026-10-31): Added an original ledger-bridge mark, wordmark, social-card SVG/PNG, and provisional usage guide. README now uses the wordmark. GitHub repository description was updated. The org avatar and repository social-preview setting are not changed by the repo API workflow; the PNG is prepared for manual upload if desired.
+- Contributor issue count remains 20. No additional ten were created: the existing backlog already covers the scoped product tasks, while the remaining safe, independent prototype tests are too small to split into ten substantive tickets. Several planned implementation issues depend on discovery and ERPNext sandbox verification. Keep the Drips Program tags absent.
 
 ## Milestones
 - [x] M1: Inspect instructions/workspace and complete initial ecosystem and competitor research.

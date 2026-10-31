@@ -1,6 +1,14 @@
+<p align="center">
+  <img src="brand/wordmark.svg" width="500" alt="Stellar Statement Bridge">
+</p>
+
+<p align="center"><em>Payout evidence, prepared for ERP reconciliation.</em></p>
+
 # Stellar Statement Bridge
 
 **Project status: early prototype.** The repository contains a Frappe app scaffold and a pure SDP payment normalizer. No network integration, ERPNext writes, pilot, or deployment exists. This is a working product name. The public repository is hosted by the `OlyraCreations-Stellar` GitHub organization.
+
+The visual identity is provisional too. See the [brand guide](docs/BRAND.md) and original vector assets in [`brand/`](brand/).
 
 Stellar Statement Bridge is a proposed Frappe app that would import completed Stellar Disbursement Platform (SDP) payment evidence into ERPNext Bank Transactions. Finance users could then use ERPNext's native reconciliation workflow to match statement records to existing accounting vouchers.
 
