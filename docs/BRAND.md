@@ -12,6 +12,8 @@ The bridge is the identifying shape. Keep the rest of the system quiet so it rem
 ## Assets
 
 - [`brand/mark.svg`](../brand/mark.svg): compact mark for avatars and small placements.
+- [`brand/avatar.png`](../brand/avatar.png): square raster organization-avatar upload candidate; GitHub profile changes require the organization's profile settings.
+- [`brand/avatar.svg`](../brand/avatar.svg): editable source for the avatar candidate.
 - [`brand/wordmark.svg`](../brand/wordmark.svg): horizontal name lockup for the README and project materials.
 - [`brand/social-card.svg`](../brand/social-card.svg): vector social-card source. GitHub's repository social-preview uploader may require a raster export; this SVG is not claimed to be installed as the GitHub preview image.
 - [`brand/social-card.png`](../brand/social-card.png): 1200×630 raster preview candidate rendered from the SVG source for GitHub's social-preview settings.
