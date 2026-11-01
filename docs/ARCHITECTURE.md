@@ -107,9 +107,9 @@ Exact Bank Transaction field names, date choice (payment-created vs ledger times
 ## Deployment and versioning
 
 - Install as a custom Frappe app into a customer's existing ERPNext deployment; no external hosted service is required.
-- Initial target is the current v16 line. The local bench uses Frappe v16.54.0 and ERPNext v16.53.0 from the `version-16` branch as of 2026-10-30. Do not claim a supported matrix until the app installs and runs on a verified ERPNext site.
-- Frappe's v16 installation guide requires Python 3.14 and Node 24. The WSL bench now has Python 3.14.4, Node 24.22.2, Yarn 1.22.22, Bench 5.31.1, Frappe v16.54.0, ERPNext v16.53.0, and the product app at commit `8216126`. Frappe, ERPNext, and product-app asset builds pass. No site exists, so site-level installation and Bank Transaction compatibility remain unverified.
-- ERPNext v16.53.0 source at commit `9cd11b19575bfc34f092a24f6c8b368c4dd69481` contains a Bank Statement Import workflow for mapped CSV/MT940 statements and a Bank Transaction import path that inserts and submits mapped rows. The exact fit with SDP exports, and whether SDP-specific deduplication and account mapping justify a separate app, require operator validation.
+- Initial target is the current v16 line. On 2026-11-01, the app installed on a disposable site using Frappe v16.54.0 and ERPNext v16.53.0 from the `version-16` branch. This verifies one version pair only, not a supported release matrix.
+- Frappe's v16 installation guide requires Python 3.14 and Node 24. The WSL bench has Python 3.14.4, Node 24.22.2, Yarn 1.22.22, Bench 5.31.1, Frappe v16.54.0, ERPNext v16.53.0, and product app checkout `8216126`. Frappe, ERPNext, and product-app asset builds pass. The app installed on the disposable site, and a synthetic Bank Transaction completed its statement-side lifecycle.
+- ERPNext v16.53.0 source at commit `9cd11b19575bfc34f092a24f6c8b368c4dd69481` provides mapped CSV/MT940 Bank Statement Import. A synthetic mapped CSV imported and submitted successfully. Importing the same source `transaction_id` again through a separate import created a duplicate. Browser and queued import behavior, malformed-row handling, real SDP export compatibility, and operator demand remain unverified. The proposed Olyra importer and idempotency layer do not exist yet.
 - SDP deployments may differ; test against an official local SDP sandbox/fixture and a real authorized sandbox tenant before production claims.
 - No production URLs, keys, tenant IDs, deployment IDs, or contract addresses are included in source control.
 
@@ -130,7 +130,8 @@ Current compatibility sources:
 ## Open decisions
 
 1. Confirm with operators whether ERPNext is used by the target SDP teams; otherwise select the ERP from evidence and re-scope.
-2. Validate that importing Bank Transactions is more useful than the native CSV flow and that manual ERP reconciliation remains costly.
-3. Install a clean Frappe/ERPNext v16 bench and verify exact Bank Transaction fields and app compatibility.
-4. Decide date/reference field semantics from current SDP response behavior and the pilot's accounting policy.
-5. Confirm the final product name; `Stellar Statement Bridge` remains a working label.
+2. Validate whether repeated native imports create a recurring operator problem and whether source IDs are stable enough for idempotency.
+3. If operators confirm the gap, implement a small idempotent import prototype or propose an upstream ERPNext change; otherwise stop or re-scope the connector.
+4. Exercise the browser/queued native import, malformed-row handling, alternate precision settings, and role permissions before publishing a supported matrix.
+5. Decide date/reference field semantics from current SDP response behavior and the pilot's accounting policy.
+6. Confirm the final product name; `Stellar Statement Bridge` remains a working label.
