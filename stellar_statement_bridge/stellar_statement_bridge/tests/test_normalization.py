@@ -16,7 +16,7 @@ def payment(**overrides):
         "amount": "12.3400000",
         "stellar_transaction_id": "stellar-tx-1",
         "asset": {"code": "USDC", "issuer": "GISSUER"},
-        "source_wallet": "wallet-1",
+        "source_wallet_id": "wallet-1",
         "external_payment_id": "invoice-1",
     }
     value.update(overrides)
@@ -29,6 +29,11 @@ class NormalizePaymentTests(unittest.TestCase):
         self.assertTrue(result.eligible)
         self.assertEqual(result.amount, Decimal("12.3400000"))
         self.assertEqual(result.stellar_transaction_id, "stellar-tx-1")
+        self.assertEqual(result.source_wallet_id, "wallet-1")
+
+    def test_ignores_undocumented_source_wallet_alias(self):
+        result = normalize_payment(payment(source_wallet_id=None, source_wallet="legacy-wallet"))
+        self.assertIsNone(result.source_wallet_id)
 
     def test_nullable_native_asset_issuer_is_allowed_for_later_exact_mapping(self):
         result = normalize_payment(payment(asset={"code": "XLM", "issuer": None}))

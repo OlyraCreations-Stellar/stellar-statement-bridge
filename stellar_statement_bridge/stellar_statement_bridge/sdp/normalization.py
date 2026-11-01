@@ -49,7 +49,7 @@ def normalize_payment(payload: Mapping[str, Any]) -> NormalizedPayment:
     status = _optional_text(payload.get("status"))
     payment_type = _optional_text(payload.get("type"))
     transaction_id = _optional_text(payload.get("stellar_transaction_id"))
-    source_wallet_id = _optional_text(payload.get("source_wallet"))
+    source_wallet_id = _optional_text(payload.get("source_wallet_id"))
     external_payment_id = _optional_text(payload.get("external_payment_id"))
 
     asset = payload.get("asset")
