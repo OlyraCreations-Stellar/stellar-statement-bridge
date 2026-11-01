@@ -48,7 +48,7 @@ Synthetic check performed through the installed site:
 
 This smoke check intentionally did not create or link a Bank Account, Payment Entry, or Journal Entry. It tests ERPNext's statement-side document lifecycle only. Production import still needs to map the transaction to the intended Bank Account and validate that account's company and currency.
 
-## Native statement import route
+## Native statement import route and repeat-import check
 
 The pinned ERPNext source provides a Bank Statement Import path:
 
@@ -58,6 +58,10 @@ The pinned ERPNext source provides a Bank Statement Import path:
 4. The importer constructs a Frappe Data Import for `Bank Transaction` with import type `Insert New Records`; it can submit imported records when `submit_after_import` is enabled.
 5. The MT940 parser emits Date, Deposit, Withdrawal, Description, Reference Number, Bank Account, and Currency columns.
 
+I exercised the importer path on the disposable site using a private, synthetic CSV attachment and a configured company Bank Account. The `start_import` function was invoked synchronously; this did not exercise the browser workflow or its queued background-job behavior. One mapped row imported successfully with `submit_after_import` enabled. The resulting Bank Transaction was submitted and Unreconciled, and retained date `2026-01-15`, USD 12.34, description, reference `SDP-TEST-002`, transaction ID `STELLAR-HASH-TEST-002`, Bank Account, and company. Payment Entry and Journal Entry counts remained zero. An initial setup attempt used a Bank Account without its company-account flag and therefore left the fetched transaction company blank. The final fixture set both the company and `is_company_account`; the successful run then populated the company correctly. All rows and accounts are synthetic and remain on the disposable site.
+
+To check duplicate behavior, I imported the same one-row CSV twice using two separate Bank Statement Import documents. Both imports reported `Success`. ERPNext created two submitted Bank Transactions with the same `transaction_id` and `reference_number`. The standard Insert New Records route did not deduplicate this fixture by source transaction ID. This is a verified risk for repeat imports; it does not prove every bank template or user workflow will re-import the same statement.
+
 Source references at the exact ERPNext revision used:
 
 - [Bank Transaction DocType fields and permissions](https://github.com/frappe/erpnext/blob/9cd11b19575bfc34f092a24f6c8b368c4dd69481/erpnext/accounts/doctype/bank_transaction/bank_transaction.json)
@@ -66,12 +70,12 @@ Source references at the exact ERPNext revision used:
 - [ERPNext Bank Transaction user guide](https://docs.frappe.io/erpnext/bank-transaction)
 - [ERPNext Bank Reconciliation user guide](https://docs.frappe.io/erpnext/bank-reconciliation)
 
-The source path was inspected; a native CSV or MT940 import was not run on the disposable site. Issue #3 remains open to compare that native route with an SDP-shaped workflow and establish whether a real gap exists. There is no evidence yet that an Olyra connector improves on the native import.
+The native CSV import path and repeat-import behavior were exercised. Issue #3 remains open because there is no Olyra Bank Transaction importer to compare against it. The evidence establishes a possible narrow gap—idempotent import by a stable source transaction ID—but not user demand, or that an Olyra connector is the best fix. An upstream ERPNext enhancement may be more appropriate if operators need the same behavior for all bank statement imports.
 
 ## Verification boundary and next step
 
-Verified: app installation on a disposable site, app presence, the synthetic single-document lifecycle, status values, the observed USD amount, and unchanged Payment Entry/Journal Entry counts.
+Verified: app installation on a disposable site, app presence, the synthetic single-document lifecycle, native CSV import for a mapped account, source field retention, repeat-import duplication by transaction ID, status values, the observed USD amount, and unchanged Payment Entry/Journal Entry counts.
 
-Not verified: native statement import execution, Bank Account mapping, import duplicate/rejection behavior, alternate currencies or precision settings, role-based permissions in a live session, actual SDP exports, recurring user pain, or end-to-end connector functionality.
+Not verified: browser-driven or queued native import behavior, rejection details for malformed rows, alternate currencies or precision settings, role-based permissions in a live session, actual SDP exports, recurring user pain, or end-to-end connector functionality.
 
-Next: run the same synthetic SDP-shaped CSV through ERPNext's native importer and document the result before implementing an ERPNext write path. Keep customer discovery open; this technical check does not validate demand.
+Next: validate with SDP/ERPNext operators whether duplicate prevention by an immutable payout/transaction ID is a recurring problem. If operators confirm it, prototype a narrowly scoped idempotent import path and compare it with the native repeat-import result; otherwise recommend stopping the connector MVP or proposing an upstream ERPNext improvement. Do not infer demand from this synthetic test.
