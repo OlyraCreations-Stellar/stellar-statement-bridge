@@ -69,8 +69,18 @@ Source references at the exact ERPNext revision used:
 - [Bank Statement Import implementation](https://github.com/frappe/erpnext/blob/9cd11b19575bfc34f092a24f6c8b368c4dd69481/erpnext/accounts/doctype/bank_statement_import/bank_statement_import.py)
 - [ERPNext Bank Transaction user guide](https://docs.frappe.io/erpnext/bank-transaction)
 - [ERPNext Bank Reconciliation user guide](https://docs.frappe.io/erpnext/bank-reconciliation)
+- [ERPNext Banking guide: duplicate imports and transaction identifiers](https://docs.frappe.io/erpnext/banking-in-erpnext)
+- [ERPNext Plaid integration: incremental sync using transaction IDs](https://docs.frappe.io/erpnext/plaid_integration)
 
 The native CSV import path and repeat-import behavior were exercised. Issue #3 remains open because there is no Olyra Bank Transaction importer to compare against it. The evidence establishes a possible narrow gap—idempotent import by a stable source transaction ID—but not user demand, or that an Olyra connector is the best fix. An upstream ERPNext enhancement may be more appropriate if operators need the same behavior for all bank statement imports.
+
+ERPNext's public Banking guide independently warns users to preserve transaction identifiers for duplicate detection and avoid importing the same period twice. Its Plaid integration already performs incremental synchronization based on transaction IDs and the Bank Account's last integration date. This makes generic idempotent bank synchronization an existing pattern. The possible Olyra distinction is handling SDP-specific payment identifiers, status, asset identity, and Stellar wallet context. Whether those records belong in the user's ERP reconciliation process is still unverified.
+
+## Current SDP payment schema cross-check
+
+The official [List All Payments API](https://developers.stellar.org/docs/platforms/stellar-disbursement-platform/api-reference/list-all-payments) documents a paginated `data` response with payment `id`, `status`, `type`, `amount`, `stellar_transaction_id`, `source_wallet_id`, `external_payment_id`, and nested `asset.code` / `asset.issuer`. It exposes a `SUCCESS` status filter, page/page_limit pagination, and an optional `X-Wallet-Id` account scope. The response example also includes nested receiver wallet and address data; the normalizer must discard those fields unless a confirmed user need requires them.
+
+This source review found that the prototype normalizer previously read `source_wallet`, which does not match the documented `source_wallet_id`. The normalizer and synthetic test fixture have been corrected to use `source_wallet_id`. No live SDP credentials or export were available; exact deployed API behavior remains unverified.
 
 ## Verification boundary and next step
 
@@ -78,4 +88,4 @@ Verified: app installation on a disposable site, app presence, the synthetic sin
 
 Not verified: browser-driven or queued native import behavior, rejection details for malformed rows, alternate currencies or precision settings, role-based permissions in a live session, actual SDP exports, recurring user pain, or end-to-end connector functionality.
 
-Next: validate with SDP/ERPNext operators whether duplicate prevention by an immutable payout/transaction ID is a recurring problem. If operators confirm it, prototype a narrowly scoped idempotent import path and compare it with the native repeat-import result; otherwise recommend stopping the connector MVP or proposing an upstream ERPNext improvement. Do not infer demand from this synthetic test.
+Next: no operator access is available for validation. Continue only with a local, unreleased technical comparison using the documented SDP payment schema and native-import fixture. Compare source-ID retention, success filtering, asset/account mapping, repeat-run behavior, and row-level errors. Then decide whether an SDP-specific app, an upstream ERPNext improvement, or stopping is justified. Do not infer demand from public docs or synthetic tests.

@@ -18,7 +18,7 @@ Teams that use Stellar's Disbursement Platform (SDP) and ERPNext may need to tra
 ## Alternatives
 
 - SDP's paginated payment API, individual payment export, and CSV exports.
-- ERPNext's native Bank Statement Import (including bank-mapped CSV and MT940 paths), Data Import/API, and manual Bank Transaction entry. A synthetic SDP-shaped CSV mapped and imported successfully on ERPNext 16.53.0; no real SDP export was tested. A repeated `transaction_id` imported through a second Bank Statement Import created a second Bank Transaction in this fixture. See `docs/ERPNext_COMPATIBILITY.md`.
+- ERPNext's native Bank Statement Import (including bank-mapped CSV and MT940 paths), Data Import/API, manual Bank Transaction entry, and Plaid bank synchronization. A synthetic SDP-shaped CSV mapped and imported successfully on ERPNext 16.53.0; no real SDP export was tested. A repeated `transaction_id` imported through a second Bank Statement Import created a second Bank Transaction in this fixture. ERPNext's Plaid integration already synchronizes incrementally using transaction IDs, so idempotency alone is not differentiated. See `docs/ERPNext_COMPATIBILITY.md`.
 - A manually maintained converter or an organization-specific integration.
 - Existing bank/payment reconciliation products where they already support the actual rails.
 

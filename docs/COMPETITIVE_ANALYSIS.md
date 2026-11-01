@@ -1,6 +1,6 @@
 # Competitive and duplication analysis
 
-**Research snapshot:** 2026-10-28. Based on the public Stellar Wave approved-repository catalog and representative descriptions/repository metadata. Classification is about stated function and workflow, not audited product capability.
+**Research snapshot:** 2026-10-28; ERPNext and SDP public-source supplement 2026-11-01. Based on the public Stellar Wave approved-repository catalog and representative descriptions/repository metadata. Classification is about stated function and workflow, not audited product capability.
 
 ## Market map
 
@@ -46,7 +46,15 @@ The full public Drips catalog was scanned across 842 repository records using na
 
 The current direction should improve the existing SDP workflow rather than recreate its payout sender or dashboard. SDP accepts custom payment IDs and provides searchable payment status and exports. PaymentFlow and Concord show related reconciliation patterns in school-fee and securities-register domains; DeenBridge and TrustBridge address other parts of payment verification/readiness. These similarities suggest useful design patterns and raise the differentiation bar; they do not make an ERP integration an automatic duplicate.
 
-A meaningful step beyond the current tools could be a focused ERPNext app: fetch paginated SDP payment records, validate `SUCCESS` status, Stellar transaction ID and exact asset issuer mapping, then import statement-side Bank Transactions with unique source links. ERPNext's native reconciliation can match those records to vouchers; the app must not post vouchers or move money. This is a tighter, testable improvement than a generic matcher, though customer demand and existing connectors remain unverified. Consider contributing upstream if the better route is to extend an existing project. Do not create a competing product just to have a separate repo. Final product and organization names remain undecided.
+A potential step beyond the current tools is a focused SDP-to-ERPNext bridge, but only if it adds a source-specific capability the native path does not provide. The disposable-site CSV check demonstrated native field mapping and identified duplicate creation on repeated imports; the Olyra importer remains unimplemented. ERPNext's native reconciliation can match statement-side Bank Transactions to vouchers, but the connector must not post vouchers or move money. Demand and the need for a separate connector remain unverified. Consider contributing upstream if that is the better route. Do not create a competing product just to have a separate repo. Final product and organization names remain undecided.
+
+### ERPNext integration supplement (public sources, checked 2026-11-01)
+
+- ERPNext's current [Banking guide](https://docs.frappe.io/erpnext/banking-in-erpnext) tells users to preserve original bank transaction identifiers for duplicate detection and to avoid loading the same statement period twice. It also calls out duplicate imports in troubleshooting. This confirms duplicate imports are a recognized operational risk, but does not establish SDP users' experience.
+- ERPNext's [Plaid integration guide](https://docs.frappe.io/erpnext/plaid_integration) already describes incremental bank synchronization based on the Bank Account's last integration date and transaction IDs. Idempotency in bank synchronization is therefore an established ERPNext capability pattern, not a novel feature by itself. Plaid's availability is country-dependent and its source is a linked bank account, unlike an SDP distribution wallet.
+- A repeated synthetic SDP-shaped CSV imported twice through two ERPNext Bank Statement Import documents created duplicate Bank Transactions on ERPNext 16.53.0. This reproduces the risk for one version and fixture only.
+- Targeted public web searches did not surface a direct SDP-to-ERPNext connector. Search absence is not evidence that none exists; private and customer-specific integrations may not be indexed.
+- No operator is currently available for interviews. The connector hypothesis remains conditional; do not treat public documentation or this synthetic test as proof of demand.
 
 ### Account-specific repo check (public metadata, checked 2026-10-28)
 
