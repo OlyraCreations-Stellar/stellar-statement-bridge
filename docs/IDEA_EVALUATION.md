@@ -77,7 +77,7 @@ Wraith explicitly describes recipient-oriented Stellar token event indexing, and
 
 Reject a standalone vendor payout sender/dashboard: Stellar's official SDP already provides this. Continue discovery only for a narrowly scoped **ERP/AP-to-SDP reconciliation adapter**, and only if actual operators confirm a specific gap after their existing exports and accounting integrations. Keep any pilot read-only. Exclude incoming x402 receipts, payment execution, wallet/key custody, and generic indexing.
 
-No greenfield direction earns a STRONG verdict yet. The account-specific audit did not make the outbound scope an exact duplicate, but it raised the bar for distinction. The next step is targeted customer discovery and an agreed product name, not public repo creation.
+No greenfield direction earns a STRONG verdict yet. The account-specific audit did not make the outbound scope an exact duplicate, but it raised the bar for distinction. The existing public repository remains a discovery-stage prototype; the next step is targeted customer discovery and an agreed product name, not implementation expansion.
 
 ## Program and funding fit
 
@@ -94,4 +94,12 @@ No greenfield direction earns a STRONG verdict yet. The account-specific audit d
 4. Stellar integration produces an observable improvement over non-blockchain alternatives.
 5. Founder/team capacity exists to support secure data imports and integrations.
 
-**Next decision:** Continue discovery of the **SDP-to-ERPNext Bank Reconciliation Connector** hypothesis, including whether native CSV import already solves the task and whether upstream contribution is better. Similarity is acceptable if user evidence supports a meaningful improvement. Do not claim market demand until operators validate it. The product has no Soroban contract requirement; one Frappe app repository is sufficient. The working name is not final.
+**Next decision:** Continue discovery of the **SDP-to-ERPNext Bank Reconciliation Connector** hypothesis, now narrowly focused on repeat-import idempotency only if operators confirm that as a recurring pain. Similarity is acceptable if user evidence supports a meaningful improvement. Do not claim market demand until operators validate it. The product has no Soroban contract requirement; one Frappe app repository is sufficient. The working name is not final.
+
+## Disposable ERPNext sandbox update (2026-11-01)
+
+**Verified:** On Frappe 16.54.0 / ERPNext 16.53.0, the app installed on a disposable local site. ERPNext's native mapped CSV importer successfully created a submitted Bank Transaction with company, Bank Account, amount, currency, reference, and source transaction ID. Repeating the same source transaction ID through a separate Bank Statement Import created a second submitted transaction. The test created no Payment Entries or Journal Entries.
+
+**What this changes:** The native path already handles basic field mapping and statement-side submission for this fixture. A custom connector should not be justified as a generic CSV/API bridge. A possible incremental value is safe idempotency across repeated SDP imports, paired with preserving SDP/Stellar identifiers. That behavior is not implemented in the Olyra app, and the test does not establish that operators need it. A shared ERPNext enhancement may be the better solution if this duplicate risk applies to all bank statement imports.
+
+**Updated verdict:** **CONDITIONAL**, not STRONG. Do not implement the custom importer until SDP/ERPNext operators confirm repeated statements or payout retries create real duplicate work, and verify which immutable ID they can provide. If that pain is absent or already managed operationally, stop or re-scope the connector. If confirmed, compare an idempotent prototype against both repeated native imports and the current ERPNext contribution options. Full setup and limits are in [`docs/ERPNext_COMPATIBILITY.md`](ERPNext_COMPATIBILITY.md).

@@ -53,11 +53,13 @@ Please reference this issue in the pull request and use `Closes #<issue-number>`
     [pscustomobject]@{
         Title = $title
         Body = $body.Trim()
-        Blocked = ($issueNumber -gt 3)
+        Blocked = ($issueNumber -gt 3 -and $issueNumber -notin @(4, 9))
+        InProgress = ($issueNumber -in @(4, 9))
         Labels = @(
             "type: $type",
             "complexity: $complexity"
-            if ($issueNumber -gt 3) { 'status: blocked' }
+            if ($issueNumber -gt 3 -and $issueNumber -notin @(4, 9)) { 'status: blocked' }
+            if ($issueNumber -in @(4, 9)) { 'status: in progress' }
         )
     }
 }
@@ -77,7 +79,8 @@ $labelDefinitions = @(
     @{ Name = 'type: testing'; Color = 'bfdadc'; Description = 'Test coverage and verification.' },
     @{ Name = 'type: maintenance'; Color = 'c5def5'; Description = 'CI and repository maintenance.' },
     @{ Name = 'type: documentation'; Color = '0075ca'; Description = 'User or developer documentation.' },
-    @{ Name = 'status: blocked'; Color = 'ededed'; Description = 'Wait for the maintainer go decision after discovery issues 1–3.' }
+    @{ Name = 'status: blocked'; Color = 'ededed'; Description = 'Wait for the maintainer go decision after discovery issues 1–3.' },
+    @{ Name = 'status: in progress'; Color = '1d76db'; Description = 'Authorized bounded prototype work is underway.' }
 )
 
 $availableLabels = @(& gh label list --repo $Repository --limit 100 --json name --jq '.[].name')
@@ -123,7 +126,12 @@ foreach ($issue in $issues) {
         Sort-Object Number |
         Select-Object -First 1
     if ($existingIssue) {
-        if ($issue.Blocked -and $existingIssue.Number -notin $blockedIssueNumbers) {
+        if ($issue.InProgress) {
+            & gh issue edit $existingIssue.Number --repo $Repository --remove-label 'status: blocked' --add-label 'status: in progress'
+            if ($LASTEXITCODE -ne 0) {
+                throw "Failed to mark existing issue '$($issue.Title)' as in progress."
+            }
+        } elseif ($issue.Blocked -and $existingIssue.Number -notin $blockedIssueNumbers) {
             & gh issue edit $existingIssue.Number --repo $Repository --add-label 'status: blocked'
             if ($LASTEXITCODE -ne 0) {
                 throw "Failed to mark existing issue '$($issue.Title)' as blocked."

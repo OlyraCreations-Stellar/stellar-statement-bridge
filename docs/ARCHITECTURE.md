@@ -1,6 +1,6 @@
 # Architecture: SDP–ERPNext Bank Reconciliation Connector
 
-**Status:** Proposed for the approved MVP scope; compatibility and real operator workflow still require validation. No application code exists yet.
+**Status:** Prototype scope; compatibility and real operator workflow still require validation. The initial scaffold and pure normalizer exist; no network or ERP write integration exists.
 **Topology:** One installable Frappe/ERPNext app. No Soroban contract, standalone backend, indexer, or hosted database.
 
 ## Context and data flow
@@ -107,9 +107,17 @@ Exact Bank Transaction field names, date choice (payment-created vs ledger times
 ## Deployment and versioning
 
 - Install as a custom Frappe app into a customer's existing ERPNext deployment; no external hosted service is required.
-- Support matrix (ERPNext/Frappe versions) must be selected after checking maintained releases and validating DocType behavior in CI/sandbox.
+- Initial target is the current v16 line. On 2026-11-01, the app installed on a disposable site using Frappe v16.54.0 and ERPNext v16.53.0 from the `version-16` branch. This verifies one version pair only, not a supported release matrix.
+- Frappe's v16 installation guide requires Python 3.14 and Node 24. The WSL bench has Python 3.14.4, Node 24.22.2, Yarn 1.22.22, Bench 5.31.1, Frappe v16.54.0, ERPNext v16.53.0, and product app checkout `8216126`. Frappe, ERPNext, and product-app asset builds pass. The app installed on the disposable site, and a synthetic Bank Transaction completed its statement-side lifecycle.
+- ERPNext v16.53.0 source at commit `9cd11b19575bfc34f092a24f6c8b368c4dd69481` provides mapped CSV/MT940 Bank Statement Import. A synthetic mapped CSV imported and submitted successfully. Importing the same source `transaction_id` again through a separate import created a duplicate. Browser and queued import behavior, malformed-row handling, real SDP export compatibility, and operator demand remain unverified. The proposed Olyra importer and idempotency layer do not exist yet.
 - SDP deployments may differ; test against an official local SDP sandbox/fixture and a real authorized sandbox tenant before production claims.
 - No production URLs, keys, tenant IDs, deployment IDs, or contract addresses are included in source control.
+
+Current compatibility sources:
+
+- [Frappe releases](https://github.com/frappe/frappe/releases)
+- [ERPNext v16 tags](https://github.com/frappe/erpnext/tags)
+- [Frappe installation requirements](https://docs.frappe.io/framework/user/en/installation)
 
 ## Testing strategy
 
@@ -122,7 +130,8 @@ Exact Bank Transaction field names, date choice (payment-created vs ledger times
 ## Open decisions
 
 1. Confirm with operators whether ERPNext is used by the target SDP teams; otherwise select the ERP from evidence and re-scope.
-2. Validate that importing Bank Transactions is more useful than the native CSV flow and that manual ERP reconciliation remains costly.
-3. Pin supported ERPNext/Frappe releases and exact import fields.
-4. Decide date/reference field semantics from current SDP response behavior and the pilot's accounting policy.
-5. Confirm organization login/name and project name before creating a public organization/repository.
+2. Validate whether repeated native imports create a recurring operator problem and whether source IDs are stable enough for idempotency.
+3. If operators confirm the gap, implement a small idempotent import prototype or propose an upstream ERPNext change; otherwise stop or re-scope the connector.
+4. Exercise the browser/queued native import, malformed-row handling, alternate precision settings, and role permissions before publishing a supported matrix.
+5. Decide date/reference field semantics from current SDP response behavior and the pilot's accounting policy.
+6. Confirm the final product name; `Stellar Statement Bridge` remains a working label.

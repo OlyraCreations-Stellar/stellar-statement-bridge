@@ -1,6 +1,6 @@
 # Contributing
 
-This repository is in discovery and has no runnable app yet. Check the issue tracker and the plan before starting work. Begin with discovery issues 1–3. Do not start implementation issues until maintainers record a go decision based on the customer-discovery gate in `docs/CUSTOMER_DISCOVERY.md`. Those later issues are labeled `status: blocked` until that decision.
+This repository is an early prototype. Check the issue tracker and plan before starting work. Discovery issues 1–3 remain the first product-validation tasks. The scaffold and pure normalization slice may proceed, but network integration, ERPNext writes, and production claims remain gated on customer discovery and a verified Frappe/ERPNext sandbox.
 
 ## Before opening an issue or pull request
 
@@ -17,6 +17,6 @@ This repository is in discovery and has no runnable app yet. Check the issue tra
 - Update documentation when behavior, permissions, or supported versions change.
 - Never add a write-capable SDP call, a key custody path, or automatic accounting voucher submission without a separately reviewed product and security decision.
 
-The supported Python, Frappe, and ERPNext versions will be documented after compatibility research. Until then, do not assume a version matrix.
+The prototype targets the current Frappe/ERPNext v16 line, but no supported version matrix is claimed until an install smoke test succeeds in a clean bench. The isolated normalizer tests require Python 3.14 and can run without Frappe.
 
 Contributions are accepted under the Apache License 2.0. See [`LICENSE`](LICENSE).

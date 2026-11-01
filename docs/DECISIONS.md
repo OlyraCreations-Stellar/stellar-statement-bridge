@@ -54,3 +54,12 @@
 - **Decision:** License project code and authored documentation under Apache-2.0. Keep third-party assets under their own licenses and do not copy ERPNext code into this repository.
 - **Consequences:** Contributors retain copyright while licensing contributions under Apache-2.0. Review third-party dependency and attribution requirements before distribution.
 - **Sources:** [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0.html), [Apache compatibility FAQ](https://www.apache.org/foundation/license-faq.html), and [Frappe license and trademark policy](https://docs.frappe.io/legal/others/license-and-trademark).
+
+## ADR-007: Begin with an isolated scaffold and SDP normalizer
+
+- **Status:** Adopted for the first local implementation slice; customer validation remains open.
+- **Date:** 2026-10-28.
+- **Context:** The user explicitly requested a code kickoff. Operator demand is still unverified, and this Windows/WSL environment does not yet satisfy the current Frappe v16 Node/Bench requirements.
+- **Options:** Wait for operator evidence before any code; begin a bounded scaffold and pure normalization layer; implement the complete integration immediately.
+- **Decision:** Create the Frappe app structure and a pure normalizer for documented SDP payment records. Do not make network requests, store credentials, create ERPNext records, or claim the customer workflow is validated in this slice.
+- **Consequences:** The normalization logic can be tested independently while the v16 bench and customer workflow are validated. Reassess before adding the SDP client or ERPNext writes.
